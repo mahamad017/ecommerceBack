@@ -30,6 +30,7 @@ Route::middleware('guest')->group(function () {
 
     // 3) Get Products
     Route::get('products', [ProductsController::class, 'GetProducts']);
+    Route::post('addProduct', [ProductsController::class, 'store']);
 
     // 4) Get Categories
     Route::get('categories', [ProductsController::class, 'GetCategories']);
@@ -44,7 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('user', function (Request $request) {
         return $request->user();
     });
-    Route::resource('products', ProductsController::class);
+    
     // 3) Get orders
     Route::get('orders', [OrdersController::class, 'index']);
 

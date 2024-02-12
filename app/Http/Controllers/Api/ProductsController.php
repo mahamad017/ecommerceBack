@@ -32,8 +32,12 @@ class ProductsController extends Controller
             'description' => $request['description'],
             'image' => $request['image'],
             'price' => $request['price'],
+            'category' => $request['category'],
             ]
         );
+        return response()->json([
+            'message' => 'product has been added successfully',
+        ], 200);
     }
     public function GetProducts(Request $request): JsonResponse
     {

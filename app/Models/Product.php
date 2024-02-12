@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Relations\MorphToMany;
 class Product extends Model
 {
     use HasFactory;
+    protected $table = 'products';
+    protected $fillable = ['name','description','image','price','category'];
 
     // protected $with = ['category_name'];
     protected $appends = ['categoryname'];
