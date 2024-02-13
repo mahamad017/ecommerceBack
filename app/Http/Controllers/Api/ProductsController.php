@@ -17,6 +17,16 @@ class ProductsController extends Controller
      * 
      * @return Array<Product>
      */
+    public function show (Product $product) : JsonResponse {
+        $res = Product::where('id', $product->id)->get();
+        return response()->json(
+            [
+                'message' => 'retreived product succesfully',
+                'data' => $res,
+            ],
+            200
+        );
+    }
     public function store(Request $request) : JsonResponse {
         if(empty($request)) {
             return response()->json(
@@ -26,6 +36,13 @@ class ProductsController extends Controller
                 400
             );
         }
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'required',
+            'price' => 'required',
+            'category' => 'required',
+        ]);
         Product::create(
             [
             'name' => $request['name'],
@@ -37,6 +54,34 @@ class ProductsController extends Controller
         );
         return response()->json([
             'message' => 'product has been added successfully',
+        ], 200);
+    }
+    public function update(Request $request, Product $product) : JsonResponse{
+        if(empty($request)) {
+            return response()->json(
+                [
+                    'message' => 'there is no data for add',
+                ],
+                400
+            );
+        }
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'image' => 'required',
+            'price' => 'required',
+            'category' => 'required',
+        ]);
+        $newProduct = Product::where('id',$product->id)->update([
+            'name' => $request['name'],
+            'description' => $request['description'],
+            'image' => $request['image'],
+            'price' => $request['price'],
+            'category' => $request['category'],
+            ]
+        );
+        return response()->json([
+            'message' => 'product has been updated successfully',
         ], 200);
     }
     public function GetProducts(Request $request): JsonResponse

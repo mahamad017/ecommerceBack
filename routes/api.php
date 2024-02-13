@@ -31,10 +31,13 @@ Route::middleware('guest')->group(function () {
 
     // 3) Get Products
     Route::get('products', [ProductsController::class, 'GetProducts']);
-    Route::post('addProduct', [ProductsController::class, 'store']);
 
     // 4) Get Categories
     Route::get('categories', [ProductsController::class, 'GetCategories']);
+        // Show Product
+    Route::get('showProduct/{product}', [ProductsController::class, 'show']);
+    // Update Product
+    Route::put('editProduct/{product}', [ProductsController::class, 'update']);
 });
 
 // auth requests
@@ -60,4 +63,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // 5) Logout User
     Route::put('logout', [AuthenticatedSessionController::class, 'logout']);
+
+
+
+    // 7) Add Product
+    Route::post('addProduct', [ProductsController::class, 'store']);
+
+    // 8) 
 });
