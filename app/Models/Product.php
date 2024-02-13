@@ -16,12 +16,6 @@ class Product extends Model
     // protected $with = ['category_name'];
     protected $appends = ['categoryname'];
     protected $hidden = ['category_object'];
-    protected $fillable = [
-        'name',
-        'description',
-        'price',
-        'image'
-    ];
 
     public function categoryObject(): BelongsTo
     {
