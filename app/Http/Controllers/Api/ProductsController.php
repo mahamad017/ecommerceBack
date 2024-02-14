@@ -7,6 +7,8 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
 {
@@ -14,7 +16,7 @@ class ProductsController extends Controller
     /**
      * @param name
      * @param category
-     * 
+     *
      * @return Array<Product>
      */
     public function show (Product $product) : JsonResponse {
@@ -110,7 +112,7 @@ class ProductsController extends Controller
 
     /**
      * @return List of Category
-     * 
+     *
      */
     public function  GetCategories(): JsonResponse
     {
@@ -120,5 +122,59 @@ class ProductsController extends Controller
             'message' => 'Categroies has been retreived successfully',
             'data' => $categories,
         ], 200);
+    }
+
+    public function createCategories(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string'],
+            'desc' => ['nullable', 'string'],
+            'image' => ['required', 'mimes:jpg,png,jpeg']
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 401);
+        }
+        try {
+            $categories = Category::create([
+                'name' => $request->input('name'),
+                'desc' => $request->input('desc'),
+                'image' => $request->input('image')
+            ]);
+            return  response()->json([
+                "message" => "Category created Successfully",
+                "data" => $categories
+            ], 201);
+        } catch (
+            \Exception $e
+        ) {
+            // return error message if there is an exception
+            return response()->json(['message' => 'Something went wrong!'], 500);
+        };
+    }
+public function destroyCategory($categoryId)
+    {
+        try {
+            // Check if the category exists
+            $category = Category::find($categoryId);
+            if (!$category) {
+                return response()->json(['message' => 'Category not found'], 404);
+            }
+
+            // Begin a database transaction
+            DB::beginTransaction();
+
+            // Delete the category
+            $category->delete();
+
+            // Commit the transaction
+            DB::commit();
+
+            return response()->json(['message' => 'Category deleted successfully'], 200);
+        } catch (\Exception $e) {
+            // Rollback the transaction in case of any exception
+            DB::rollBack();
+
+            return response()->json(['message' => 'Failed to delete category', 'error' => $e->getMessage()], 500);
+        }
     }
 }

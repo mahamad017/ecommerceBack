@@ -55,6 +55,12 @@ Route::middleware('auth:sanctum')->group(function () {
     //getallusers
     Route::get('users',[UserController::class,'show']);
 
+    //createcategory
+    Route::post('categories', [ProductsController::class, 'createCategories']);
+    //destroyCategory
+     Route::delete('categories/{id}', [ProductsController::class, 'destroyCategory']);
+
+
     // 3) Get orders
     Route::get('orders', [OrdersController::class, 'index']);
 
@@ -69,5 +75,5 @@ Route::middleware('auth:sanctum')->group(function () {
     // 7) Add Product
     Route::post('addProduct', [ProductsController::class, 'store']);
 
-    // 8) 
+    // 8)
 });
