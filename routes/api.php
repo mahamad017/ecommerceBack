@@ -62,7 +62,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //createcategory
     Route::post('categories', [ProductsController::class, 'createCategories']);
     //destroyCategory
-     Route::delete('categories/{id}', [ProductsController::class, 'destroyCategory']);
+    Route::delete('categories/{id}', [ProductsController::class, 'destroyCategory']);
 
 
     // 3) Get orders
@@ -76,9 +76,4 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-
-<<<<<<< HEAD
-    // 8)
-=======
->>>>>>> b91398b73f1de06dd5cd21d7133c8d3ad6e854b5
 });
