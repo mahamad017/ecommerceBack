@@ -38,6 +38,10 @@ Route::middleware('guest')->group(function () {
     Route::get('showProduct/{product}', [ProductsController::class, 'show']);
     // Update Product
     Route::put('editProduct/{product}', [ProductsController::class, 'update']);
+    // Add Product
+    Route::post('addProduct', [ProductsController::class, 'store']);
+    // delete Product
+    Route::delete('deleteProduct/{product}', [ProductsController::class, 'destroy']);
 });
 
 // auth requests
@@ -66,8 +70,5 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-    // 7) Add Product
-    Route::post('addProduct', [ProductsController::class, 'store']);
 
-    // 8) 
 });
