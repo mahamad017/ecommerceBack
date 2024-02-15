@@ -136,6 +136,7 @@ class ProductsController extends Controller
    public function createCategories(Request $request)
 {
     $validator = Validator::make($request->all(), [
+        'id' => ['integer','unique:categories'],
         'name' => ['required', 'string'],
         'description' => ['nullable', 'string'],
         // Adjust the validation rules as per your requirements
