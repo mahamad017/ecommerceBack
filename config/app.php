@@ -15,6 +15,8 @@ return [
     | any other location as required by the application or its packages.
     |
     */
+    'debug' => env('APP_DEBUG', true),
+
 
     'name' => env('APP_NAME', 'Laravel'),
 

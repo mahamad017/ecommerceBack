@@ -23,6 +23,8 @@ sanctum - passport
 
 // not auth requests
 Route::middleware('guest')->group(function () {
+
+    Route::post('addcategories', [ProductsController::class, 'createCategories']);
     // 1) Register
     Route::post('register', [RegisteredUserController::class, 'store']);
 
@@ -60,7 +62,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('users',[UserController::class,'show']);
 
     //createcategory
-    Route::post('categories', [ProductsController::class, 'createCategories']);
     //destroyCategory
     Route::delete('categories/{id}', [ProductsController::class, 'destroyCategory']);
 

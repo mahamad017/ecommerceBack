@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ProductsController extends Controller
@@ -132,33 +133,39 @@ class ProductsController extends Controller
         ], 200);
     }
 
-    public function createCategories(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string'],
-            'desc' => ['nullable', 'string'],
-            'image' => ['required', 'mimes:jpg,png,jpeg']
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 401);
-        }
-        try {
-            $categories = Category::create([
-                'name' => $request->input('name'),
-                'desc' => $request->input('desc'),
-                'image' => $request->input('image')
-            ]);
-            return  response()->json([
-                "message" => "Category created Successfully",
-                "data" => $categories
-            ], 201);
-        } catch (
-            \Exception $e
-        ) {
-            // return error message if there is an exception
-            return response()->json(['message' => 'Something went wrong!'], 500);
-        };
+   public function createCategories(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'name' => ['required', 'string'],
+        'description' => ['nullable', 'string'],
+        // Adjust the validation rules as per your requirements
+    ]);
+    //print to name and desc to check
+
+
+
+    if ($validator->fails()) {
+        return response()->json(['errors' => $validator->errors()], 400);
     }
+
+    try {
+        $category = Category::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            // Adjust the field names as per your database schema
+        ]);
+
+        return response()->json([
+            'message' => 'Category created successfully',
+            'data' => $category
+        ], 201);
+    } catch (\Exception $e) {
+    Log::error('Exception occurred: ' . $e->getMessage());
+    // Optionally, you can return a more specific error message
+    return response()->json(['error' => 'An error occurred while creating categories'], 500);
+}
+}
+
 public function destroyCategory($categoryId)
     {
         try {
@@ -170,7 +177,11 @@ public function destroyCategory($categoryId)
 
             // Begin a database transaction
             DB::beginTransaction();
-
+            //
+            $products = Product::where('category', $categoryId)->get();
+        foreach ($products as $product) {
+            $product->delete();
+        }
             // Delete the category
             $category->delete();
 
