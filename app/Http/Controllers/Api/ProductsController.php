@@ -152,7 +152,7 @@ class ProductsController extends Controller
     try {
         $category = Category::create([
             'name' => $request->input('name'),
-            'description' => $request->input('description'),
+            'desc' => $request->input('description'),
             // Adjust the field names as per your database schema
         ]);
 

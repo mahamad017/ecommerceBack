@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Product extends Model
@@ -26,14 +27,9 @@ class Product extends Model
     {
         return $this->categoryObject->name;
     }
+    public function orders(): HasMany
+    {
+        return $this->hasMany(ProductOrder::class, 'product', 'id');
+    }
 
-
-    // admin dashboard - each product - how much order was created for
-    // /**
-    //  * Get all of the orders that are assigned this product.
-    //  */
-    // public function posts(): MorphToMany
-    // {
-    //     return $this->morphedByMany(Order::class, 'orders');
-    // }
 }

@@ -17,6 +17,6 @@ class Category extends Model
 
     }
     protected $guarded = ['id'];
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['name', 'desc'];
 
 }
