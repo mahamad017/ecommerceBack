@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -195,6 +196,20 @@ public function destroyCategory($categoryId)
             DB::rollBack();
 
             return response()->json(['message' => 'Failed to delete category', 'error' => $e->getMessage()], 500);
+        }
+    }
+    public function statistics()
+    {
+
+
+        try {
+            $data ['category'] = Category::count();
+            $data ['product'] = Product::count();
+            $data['user'] = User::count();
+           // $data ['order'] = Order::count();
+            return response()->json([ 'data' => $data], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed'], 500);
         }
     }
 }

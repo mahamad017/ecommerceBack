@@ -47,7 +47,9 @@ Route::middleware('guest')->group(function () {
 });
 
 // auth requests
+Route::get('statistics', [ProductsController::class, 'statistics']);
 Route::middleware('auth:sanctum')->group(function () {
+
     Route::post('create-user', [UserController::class, 'createUser']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
     // 1) Create orders
