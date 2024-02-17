@@ -15,6 +15,11 @@ class UserController extends Controller
 {
     //
     public function show(Request $request){
+
+
+
+
+
        try{
 
            $uses = User::all();
@@ -32,6 +37,12 @@ class UserController extends Controller
 
     }
     public function createUser(Request $request){
+
+        if(!$request->user()->role == "admin"){
+
+            return response() -> json(["error" => "Unauthorized"], 401);
+        }
+
             $request->validate([
                 'email' => 'required|string|email|max:255|unique:'.User::class,
                 'password' => ['required', 'confirmed'],
@@ -49,8 +60,14 @@ class UserController extends Controller
 
         });
     }
-        public function destroy($id)
-    {
+        public function destroy($id , Request $request){
+
+              if(!$request->user()->role == "admin"){
+
+            return response() -> json(["error" => "Unauthorized"], 401);
+        }
+
+
         try {
             $user = User::find($id);
             if(!$user){

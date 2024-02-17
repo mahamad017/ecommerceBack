@@ -32,8 +32,8 @@ class ProductOrder extends Model
     {
         return $this->hasOne(Product::class, 'id', 'product');
     }
-     public function order_object(): HasOne
-    {
-        return $this->hasOne(Order::class, 'id', 'order');
-    }
+    //  public function order_object(): HasOne
+    // {
+    //     return $this->hasOne(Order::class, 'id', 'order');
+    // }
 }

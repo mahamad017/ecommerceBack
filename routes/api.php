@@ -24,7 +24,6 @@ sanctum - passport
 // not auth requests
 Route::middleware('guest')->group(function () {
 
-    Route::post('add-categories', [ProductsController::class, 'createCategories']);
     // 1) Register
     Route::post('register', [RegisteredUserController::class, 'store']);
 
@@ -37,6 +36,15 @@ Route::middleware('guest')->group(function () {
     // 4) Get Categories
     Route::get('categories', [ProductsController::class, 'GetCategories']);
         // Show Product
+
+        Route::get('statistics', [ProductsController::class, 'statistics']);
+});
+
+// auth requests
+Route::middleware('auth:sanctum')->group(function () {
+
+        Route::post('add-categories', [ProductsController::class, 'createCategories']);
+
     Route::get('showProduct/{product}', [ProductsController::class, 'show']);
     // Update Product
     Route::put('editProduct/{product}', [ProductsController::class, 'update']);
@@ -44,11 +52,6 @@ Route::middleware('guest')->group(function () {
     Route::post('addProduct', [ProductsController::class, 'store']);
     // delete Product
     Route::delete('deleteProduct/{product}', [ProductsController::class, 'destroy']);
-});
-
-// auth requests
-Route::get('statistics', [ProductsController::class, 'statistics']);
-Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('create-user', [UserController::class, 'createUser']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
