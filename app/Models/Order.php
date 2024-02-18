@@ -16,6 +16,8 @@ class Order extends Model
      *
      * @var array<int, string>
      */
+    protected $table = 'orders';
+
     protected $fillable = [
         'user_id',
         'total',
@@ -29,7 +31,7 @@ class Order extends Model
     {
         return $this->hasMany(ProductOrder::class, 'order', 'id');
     }
-
+    
     // /**
     //  * Get all of the products for the order.
     //  */

@@ -36,12 +36,7 @@ Route::middleware('guest')->group(function () {
     Route::get('categories', [ProductsController::class, 'GetCategories']);
         // Show Product
     Route::get('showProduct/{product}', [ProductsController::class, 'show']);
-    // Update Product
-    Route::put('editProduct/{product}', [ProductsController::class, 'update']);
-    // Add Product
-    Route::post('addProduct', [ProductsController::class, 'store']);
-    // delete Product
-    Route::delete('deleteProduct/{product}', [ProductsController::class, 'destroy']);
+
 });
 
 // auth requests
@@ -50,7 +45,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('users/{id}', [UserController::class, 'destroy']);
     // 1) Create orders
     Route::post('orders', [OrdersController::class, 'store']);
-
+    // Get orders
+    Route::get('orders', [OrdersController::class, 'index']);
+    // Update Product
+    Route::put('editProduct/{product}', [ProductsController::class, 'update']);
+    // Add Product
+    Route::post('addProduct', [ProductsController::class, 'store']);
+    // delete Product
+    Route::delete('deleteProduct/{product}', [ProductsController::class, 'destroy']);
     // 2) Get User API Requests
     Route::get('user', function (Request $request) {
         return $request->user();
@@ -59,8 +61,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //getallusers
     Route::get('users',[UserController::class,'show']);
 
-    // 3) Get orders
-    Route::get('orders', [OrdersController::class, 'index']);
+    // 3) 
 
     // 4) Modify/Update Order
     Route::put('orders', [OrdersController::class, 'update']);

@@ -19,11 +19,6 @@ return new class extends Migration
             $table->string('image');
             $table->timestamps();
         });
-
-        // add category key to products table
-        Schema::table('products', function ($table) {
-            $table->integer('category');
-        });
     }
 
     /**
@@ -33,10 +28,5 @@ return new class extends Migration
     {
         // remove categories table
         Schema::dropIfExists('categories');
-
-        // remove category key column
-        Schema::table('products', function ($table) {
-            $table->dropColumn('category');
-        });
     }
 };
