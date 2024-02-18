@@ -12,7 +12,7 @@ use App\Models\Product;
 class OrdersController extends Controller
 {
     /**
-     * Request: 
+     * Request:
      * auth request
      * @param products list with qty
      */
@@ -45,7 +45,7 @@ class OrdersController extends Controller
         $dbProducts = Product::whereIn('id', $requestProductsIds)->get();
 
         // Validation 2
-        // check if products count is same (qty, stock ...)        
+        // check if products count is same (qty, stock ...)
         if (count($requestProducts) != count($dbProducts)) {
             return response()->json(
                 [

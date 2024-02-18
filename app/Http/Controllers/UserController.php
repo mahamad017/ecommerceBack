@@ -8,12 +8,18 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     //
     public function show(Request $request){
+
+
+
+
+
        try{
 
            $uses = User::all();
@@ -32,27 +38,36 @@ class UserController extends Controller
     }
     public function createUser(Request $request){
 
+        if(!$request->user()->role == "admin"){
+
+            return response() -> json(["error" => "Unauthorized"], 401);
+        }
+
             $request->validate([
                 'email' => 'required|string|email|max:255|unique:'.User::class,
                 'password' => ['required', 'confirmed'],
             ]);
-
+        return DB::transaction(function () use ($request) {
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
             ]);
 
-            event(new Registered($user));
 
-            Auth::login($user);
+             // Attempt to login the user after creation
+            return response()->json(['success'=>true,'data'=>$user]);
 
-        // return json success message
-        return response()->json(['success'=>true,'data'=>$user]);
+        });
+    }
+        public function destroy($id , Request $request){
 
+              if(!$request->user()->role == "admin"){
+
+            return response() -> json(["error" => "Unauthorized"], 401);
         }
-        public function destroy($id)
-    {
+
+
         try {
             $user = User::find($id);
             if(!$user){

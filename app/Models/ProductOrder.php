@@ -12,6 +12,8 @@ class ProductOrder extends Model
 
     protected $table = 'products_orders';
 
+    protected $with = ['product_object','order_object'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,5 +25,15 @@ class ProductOrder extends Model
         'qty',
     ];
 
-
+    /**
+     * get product object
+     */
+    public function product_object(): HasOne
+    {
+        return $this->hasOne(Product::class, 'id', 'product');
+    }
+    //  public function order_object(): HasOne
+    // {
+    //     return $this->hasOne(Order::class, 'id', 'order');
+    // }
 }

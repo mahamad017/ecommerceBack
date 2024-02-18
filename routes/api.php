@@ -23,6 +23,7 @@ sanctum - passport
 
 // not auth requests
 Route::middleware('guest')->group(function () {
+
     // 1) Register
     Route::post('register', [RegisteredUserController::class, 'store']);
 
@@ -35,12 +36,18 @@ Route::middleware('guest')->group(function () {
     // 4) Get Categories
     Route::get('categories', [ProductsController::class, 'GetCategories']);
         // Show Product
-    Route::get('showProduct/{product}', [ProductsController::class, 'show']);
 
+        Route::get('statistics', [ProductsController::class, 'statistics']);
 });
 
 // auth requests
 Route::middleware('auth:sanctum')->group(function () {
+
+        Route::post('add-categories', [ProductsController::class, 'createCategories']);
+
+    Route::get('showProduct/{product}', [ProductsController::class, 'show']);
+
+
     Route::post('create-user', [UserController::class, 'createUser']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
     // 1) Create orders
@@ -61,6 +68,16 @@ Route::middleware('auth:sanctum')->group(function () {
     //getallusers
     Route::get('users',[UserController::class,'show']);
 
+    //createcategory
+    //destroyCategory
+    Route::delete('categories/{id}', [ProductsController::class, 'destroyCategory']);
+
+
+    //createcategory
+    //destroyCategory
+    Route::delete('categories/{id}', [ProductsController::class, 'destroyCategory']);
+
+
     // 3) 
 
     // 4) Modify/Update Order
@@ -68,7 +85,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // 5) Logout User
     Route::put('logout', [AuthenticatedSessionController::class, 'logout']);
-
 
 
 

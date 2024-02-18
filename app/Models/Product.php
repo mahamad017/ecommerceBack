@@ -26,17 +26,9 @@ class Product extends Model
     {
         return $this->categoryObject->name;
     }
-
-    public function orders() : BelongsToMany {
-        return $this->belongsToMany(Product::class);
+    public function orders(): HasMany
+    {
+        return $this->hasMany(ProductOrder::class, 'product', 'id');
     }
 
-    // admin dashboard - each product - how much order was created for
-    // /**
-    //  * Get all of the orders that are assigned this product.
-    //  */
-    // public function posts(): MorphToMany
-    // {
-    //     return $this->morphedByMany(Order::class, 'orders');
-    // }
 }

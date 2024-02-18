@@ -12,21 +12,39 @@ return new class extends Migration
     public function up(): void
     {
         // create categories table
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('desc');
-            $table->string('image');
-            $table->timestamps();
+    if (!Schema::hasTable('categories')) {
+            Schema::create('categories', function (Blueprint $table) {
+                $table->id();
+                $table->string('name');
+                $table->text('desc');
+                $table->string('image');
+                $table->timestamps();
+            });
+        }
+        // add category key to products table
+        Schema::table('products', function ($table) {
+            if (!Schema::hasColumn('products', 'category')) {
+                $table->integer('category');
+            }
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        // remove categories table
-        Schema::dropIfExists('categories');
+        // Drop the categories table only if it exists
+        if (Schema::hasTable('categories')) {
+            Schema::dropIfExists('categories');
+        }
+
+        // Drop the category key column only if it exists
+        Schema::table('products', function ($table) {
+            if (Schema::hasColumn('products', 'category')) {
+                $table->dropColumn('category');
+            }
+        });
     }
 };
