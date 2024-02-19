@@ -114,6 +114,15 @@ class ProductsController extends Controller
             $proudcts = $proudcts->where('category', $category);
         }
 
+        if(empty($name) && empty($category) ){
+        $proudcts = Product::all();
+            return response()->json([
+            'message' => 'products has been retreived successfully',
+            'data' => $proudcts,
+        ], 200);
+
+        }
+
         return response()->json([
             'message' => 'products has been retreived successfully',
             'data' => $proudcts,

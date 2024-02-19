@@ -16,10 +16,6 @@ class UserController extends Controller
     //
     public function show(Request $request){
 
-
-
-
-
        try{
 
            $uses = User::all();

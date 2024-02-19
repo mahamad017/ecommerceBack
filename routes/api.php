@@ -37,7 +37,7 @@ Route::middleware('guest')->group(function () {
     Route::get('categories', [ProductsController::class, 'GetCategories']);
         // Show Product
 
-        Route::get('statistics', [ProductsController::class, 'statistics']);
+    Route::get('statistics', [ProductsController::class, 'statistics']);
 });
 
 // auth requests
@@ -75,10 +75,10 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //createcategory
     //destroyCategory
-    Route::delete('categories/{id}', [ProductsController::class, 'destroyCategory']);
+    //Route::delete('categories/{id}', [ProductsController::class, 'destroyCategory']);
 
 
-    // 3) 
+    // 3)
 
     // 4) Modify/Update Order
     Route::put('orders', [OrdersController::class, 'update']);
