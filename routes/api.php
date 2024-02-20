@@ -51,7 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('create-user', [UserController::class, 'createUser']);
     Route::delete('users/{id}', [UserController::class, 'destroy']);
     // 1) Create orders
-    Route::post('orders', [OrdersController::class, 'store']);
+    Route::post('addorders', [OrdersController::class, 'store']);
     // Get orders
     Route::get('orders', [OrdersController::class, 'index']);
     // Update Product
