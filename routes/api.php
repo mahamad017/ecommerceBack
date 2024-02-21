@@ -38,6 +38,7 @@ Route::middleware('guest')->group(function () {
         // Show Product
 
     Route::get('statistics', [ProductsController::class, 'statistics']);
+    Route::get('orders', [OrdersController::class, 'index']);
 });
 
 // auth requests
@@ -53,7 +54,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // 1) Create orders
     Route::post('addorders', [OrdersController::class, 'store']);
     // Get orders
-    Route::get('orders', [OrdersController::class, 'index']);
     // Update Product
     Route::put('editProduct/{product}', [ProductsController::class, 'update']);
     // Add Product
