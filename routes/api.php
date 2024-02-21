@@ -43,8 +43,8 @@ Route::middleware('guest')->group(function () {
 
 // auth requests
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post('add-categories', [ProductsController::class, 'createCategories']);
 
-        Route::post('add-categories', [ProductsController::class, 'createCategories']);
 
     Route::get('showProduct/{product}', [ProductsController::class, 'show']);
 

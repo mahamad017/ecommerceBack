@@ -146,7 +146,6 @@ class ProductsController extends Controller
    public function createCategories(Request $request)
 {
     $validator = Validator::make($request->all(), [
-        'id' => ['integer','unique:categories'],
         'name' => ['required', 'string'],
         'description' => ['nullable', 'string'],
         // Adjust the validation rules as per your requirements
@@ -171,9 +170,9 @@ class ProductsController extends Controller
             'data' => $category
         ], 201);
     } catch (\Exception $e) {
-    Log::error('Exception occurred: ' . $e->getMessage());
+    //Log::error('Exception occurred: ' . $e->getMessage());
     // Optionally, you can return a more specific error message
-    return response()->json(['error' => 'An error occurred while creating categories'], 500);
+    return response()->json(['error' => $e->getMessage()], 500);
 }
 }
 
