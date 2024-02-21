@@ -22,7 +22,7 @@ class OrdersController extends Controller
         // products : request
 
         // Validation 1
-        if (empty($request->products)) {
+        if (empty($request->json()->products)) {
             return response()->json(
                 [
                     'message' => 'products are not exist!',
